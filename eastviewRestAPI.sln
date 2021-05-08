@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EastviewRestAPI", "eastviewRestAPI\EastviewRestAPI.csproj", "{D9FC7867-47D9-4B70-AD0D-C5C4F4D891EC}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3384CB0D-7725-494E-8717-E917F926F89C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9FC7867-47D9-4B70-AD0D-C5C4F4D891EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9FC7867-47D9-4B70-AD0D-C5C4F4D891EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9FC7867-47D9-4B70-AD0D-C5C4F4D891EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9FC7867-47D9-4B70-AD0D-C5C4F4D891EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3384CB0D-7725-494E-8717-E917F926F89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3384CB0D-7725-494E-8717-E917F926F89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3384CB0D-7725-494E-8717-E917F926F89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3384CB0D-7725-494E-8717-E917F926F89C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1B0AD65-54D5-4655-AF12-0475B592964B}
+	EndGlobalSection
+EndGlobal
