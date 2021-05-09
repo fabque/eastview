@@ -3,5 +3,10 @@
 
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+
+  Welcome: 'Welcome',
+  Citizens: 'Citizens',
+  Tasks: 'Tasks',
+  Miranda: 'Miranda'
 }
