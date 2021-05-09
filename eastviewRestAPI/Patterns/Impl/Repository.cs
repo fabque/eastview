@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace EastviewRestAPI.Patterns.Impl
 {
-    public abstract class Repository<TEntity, TContext> : IRepository<TEntity>
-        where TEntity : class, IEntity
-        where TContext : DbContext
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : class
     {
-        private readonly TContext context;
-        public Repository(TContext context)
+        protected readonly EastviewDbContext context;
+        public Repository(EastviewDbContext context)
         {
             this.context = context;
         }

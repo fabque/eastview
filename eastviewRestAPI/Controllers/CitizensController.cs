@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EastviewRestAPI.Models;
+using EastviewRestAPI.Services.Interfaces;
 
 namespace EastviewRestAPI.Controllers
 {
@@ -13,25 +14,25 @@ namespace EastviewRestAPI.Controllers
     [ApiController]
     public class CitizensController : ControllerBase
     {
-        private readonly EastviewDbContext _context;
+        private readonly ICitizenService _service;
 
-        public CitizensController(EastviewDbContext context)
+        public CitizensController(ICitizenService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/Citizens
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Citizen>>> GetCitizens()
         {
-            return await _context.Citizens.ToListAsync();
+            return await _service.GetAll();
         }
 
         // GET: api/Citizens/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Citizen>> GetCitizen(int id)
         {
-            var citizen = await _context.Citizens.FindAsync(id);
+            var citizen = await _service.Get(id);
 
             if (citizen == null)
             {
@@ -52,11 +53,9 @@ namespace EastviewRestAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(citizen).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.Update(citizen);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,8 @@ namespace EastviewRestAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Citizen>> PostCitizen(Citizen citizen)
         {
-            _context.Citizens.Add(citizen);
-            await _context.SaveChangesAsync();
+           
+            await _service.Add(citizen);
 
             return CreatedAtAction("GetCitizen", new { id = citizen.Id }, citizen);
         }
@@ -89,21 +88,19 @@ namespace EastviewRestAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Citizen>> DeleteCitizen(int id)
         {
-            var citizen = await _context.Citizens.FindAsync(id);
+            var citizen = await _service.Delete(id);
             if (citizen == null)
             {
                 return NotFound();
             }
-
-            _context.Citizens.Remove(citizen);
-            await _context.SaveChangesAsync();
 
             return citizen;
         }
 
         private bool CitizenExists(int id)
         {
-            return _context.Citizens.Any(e => e.Id == id);
+            var citizen = _service.Get(id);
+            return citizen != null;
         }
     }
 }

@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace EastviewRestAPI.Patterns
 {
-    public interface IRepository<T> where T : class, Models.IEntity
+    public interface IRepository<TEntity> where TEntity : class
     {
-        Task<List<T>> GetAll();
-        Task<T> Get(int id);
-        Task<T> Add(T entity);
-        Task<T> Update(T entity);
-        Task<T> Delete(int id);
+        Task<List<TEntity>> GetAll();
+        Task<TEntity> Get(int id);
+        Task<TEntity> Add(TEntity entity);
+        Task<TEntity> Update(TEntity entity);
+        Task<TEntity> Delete(int id);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EastviewRestAPI.Models;
+using EastviewRestAPI.Services.Interfaces;
 
 namespace EastviewRestAPI.Controllers
 {
@@ -13,25 +14,25 @@ namespace EastviewRestAPI.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly EastviewDbContext _context;
+        private readonly ICitizenTaskService _service;
 
-        public TasksController(EastviewDbContext context)
+        public TasksController(ICitizenTaskService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/Tasks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CitizenTask>>> GetTasks()
         {
-            return await _context.Tasks.ToListAsync();
+            return await _service.GetAll();
         }
 
         // GET: api/Tasks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CitizenTask>> GetTask(int id)
         {
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _service.Get(id);
 
             if (task == null)
             {
@@ -52,11 +53,9 @@ namespace EastviewRestAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(task).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.Update(task);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,7 @@ namespace EastviewRestAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<CitizenTask>> PostTask(CitizenTask task)
         {
-            _context.Tasks.Add(task);
-            await _context.SaveChangesAsync();
+            await _service.Add(task);            
 
             return CreatedAtAction("GetTask", new { id = task.Id }, task);
         }
@@ -89,21 +87,19 @@ namespace EastviewRestAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CitizenTask>> DeleteTask(int id)
         {
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _service.Delete(id);
             if (task == null)
             {
                 return NotFound();
             }
-
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
 
             return task;
         }
 
         private bool TaskExists(int id)
         {
-            return _context.Tasks.Any(e => e.Id == id);
+            var task = _service.Get(id);
+            return task != null;
         }
     }
 }
