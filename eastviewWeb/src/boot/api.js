@@ -10,11 +10,6 @@ const apiPaths = {
 class HttpClient {
   constructor (axiosConfig) {
     this.instance = axios.create(axiosConfig)
-
-    // TODO: Check if the axios issue was solved (axios ignores default params in requests)
-    this.instance.interceptors.request.use(
-      this._handleRequest.bind(this)
-    )
   }
 }
 

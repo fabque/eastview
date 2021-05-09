@@ -49,7 +49,7 @@
             dense
             debounce="300"
             v-model="textFilter"
-            :placeholder="$t('firstname')"
+            :placeholder="$t('Filter')"
           >
             <template v-slot:append>
               <q-icon name="search" />
@@ -83,9 +83,7 @@ import { apiInstance } from 'boot/api'
 export default {
   data: () => ({
     textFilter: '',
-    dayIdFilter: '',
     citizens: [],
-    days: [],
     pagination: {
       rowsPerPage: 0
     }
@@ -136,18 +134,17 @@ export default {
     },
     filter () {
       return {
-        search: this.textFilter,
-        dayId: this.dayIdFilter
+        search: this.textFilter
       }
     }
   },
   methods: {
-    getDays () {
+    /* getDays () {
       apiInstance.getDays().then((
         days) => {
         this.days = days
       })
-    },
+    }, */
     getCitizens () {
       apiInstance.getCitizens().then((data) => {
         this.citizens = data
