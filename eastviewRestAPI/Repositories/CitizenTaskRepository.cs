@@ -15,7 +15,7 @@ namespace EastviewRestAPI.Repositories
         {
         }
 
-        public async Task<List<CitizenTask>> GetAll()
+        public new async Task<List<CitizenTask>> GetAll()
         {
             return await context.Tasks.Include(x => x.Citizen).ToListAsync();
         }
